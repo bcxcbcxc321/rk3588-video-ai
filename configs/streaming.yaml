@@ -1,0 +1,30 @@
+# 输出与推流配置
+streaming:
+  mosaic:
+    enabled: true
+    layout: auto          # auto | 1x1 | 2x2 | 2x3 | 3x3 | 4x4
+    width: 1280
+    height: 720
+    show_channel_name: true
+    show_fps: true
+    show_timestamp: true
+
+  encoder:
+    codec: h264           # h264 | h265
+    width: 1280
+    height: 720
+    fps: 25
+    bitrate: 2000000
+    gop: 50
+
+  rtmp:
+    enabled: false
+    url: rtmp://127.0.0.1/live/rk_video_ai
+
+  rtsp:
+    enabled: false
+    url: rtsp://127.0.0.1:8554/rk_video_ai
+
+  record:
+    enabled: false
+    output_dir: output/records

@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(rk_video_ai
     src/app/main.cpp
+    src/app/cli_args.cpp
+    src/config/app_config.cpp
     src/logging/logger.cpp
 )
 

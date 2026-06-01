@@ -1,4 +1,4 @@
-# 应用基础配置示例
+# 应用基础配置
 app:
   name: rk3588_video_ai
   log_level: info        # debug | info | warn | error

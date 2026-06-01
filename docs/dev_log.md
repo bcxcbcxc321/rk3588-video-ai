@@ -84,3 +84,46 @@ tail -n 10 output/logs/stage_1_2.log
 #### Git 提交建议
 
 - commit: `feat: add basic logging module`
+
+### 2026-06-01 - Stage 1.3 配置模块
+
+#### 今日完成
+
+- [x] 选择配置格式：YAML。
+- [x] 创建根配置文件：`configs/app.yaml`、`configs/streams.yaml`、`configs/models.yaml`、`configs/streaming.yaml`。
+- [x] 实现 App 配置结构体：`AppConfig`。
+- [x] 实现 App 配置读取器：`AppConfigLoader::loadFromFile`。
+- [x] 支持命令行参数：`--config <path>` 和 `--help`。
+- [x] 支持配置校验：`app.name`、`app.log_level`、`app.enable_console_log`、`app.graceful_shutdown`。
+- [x] 配置读取失败、配置值非法时能输出明确错误。
+
+#### 验证命令
+
+```bash
+./scripts/build/build.sh
+./scripts/run/run_local.sh --config configs/app.yaml
+./scripts/run/run_local.sh --config configs/not_exists.yaml
+./scripts/run/run_local.sh --help
+```
+
+#### 验证结果
+
+正常配置输出包含：
+
+```text
+[INFO] [main.cpp:37] loaded config: configs/app.yaml
+[INFO] [main.cpp:38] app.name = rk3588_video_ai
+[INFO] [main.cpp:39] app.log_level = INFO
+[INFO] [main.cpp:41] app.log_file = output/logs/app.log
+```
+
+异常配置输出包含：
+
+```text
+[ERROR] [main.cpp:24] config file not found or cannot be opened: configs/not_exists.yaml
+[ERROR] [main.cpp:24] invalid app.log_level: verbose (expected debug/info/warn/error)
+```
+
+#### Git 提交建议
+
+- commit: `feat: add yaml app configuration loader`

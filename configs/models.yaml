@@ -1,0 +1,45 @@
+# 模型配置
+models:
+  - name: person
+    type: yolov5
+    path: models/rknn/person.rknn
+    labels: models/labels/person.txt
+    input_width: 640
+    input_height: 640
+    confidence_threshold: 0.30
+    nms_threshold: 0.45
+    npu_core: 0
+    enabled: true
+
+  - name: helmet
+    type: yolov5
+    path: models/rknn/helmet.rknn
+    labels: models/labels/helmet.txt
+    input_width: 640
+    input_height: 640
+    confidence_threshold: 0.30
+    nms_threshold: 0.45
+    npu_core: 1
+    enabled: false
+
+  - name: callplay
+    type: yolov5
+    path: models/rknn/callplay.rknn
+    labels: models/labels/callplay.txt
+    input_width: 640
+    input_height: 640
+    confidence_threshold: 0.30
+    nms_threshold: 0.45
+    npu_core: 2
+    enabled: false
+
+  - name: tired
+    type: yolov5
+    path: models/rknn/tired.rknn
+    labels: models/labels/tired.txt
+    input_width: 640
+    input_height: 640
+    confidence_threshold: 0.30
+    nms_threshold: 0.45
+    npu_core: 0
+    enabled: false

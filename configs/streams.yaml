@@ -1,0 +1,24 @@
+# 视频源配置
+streams:
+  - id: file01
+    name: demo_video
+    type: file             # file | rtsp
+    url: assets/videos/demo.mp4
+    enabled: true
+    loop: true
+    reconnect: false
+    reconnect_interval_ms: 3000
+    read_timeout_ms: 5000
+    expected_fps: 25
+
+  # 示例：真实 RTSP 地址不要提交账号密码到 GitHub
+  # - id: cam01
+  #   name: front_gate
+  #   type: rtsp
+  #   url: rtsp://user:password@192.168.1.100:554/stream1
+  #   enabled: false
+  #   loop: false
+  #   reconnect: true
+  #   reconnect_interval_ms: 3000
+  #   read_timeout_ms: 5000
+  #   expected_fps: 25
