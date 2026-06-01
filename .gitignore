@@ -1,0 +1,43 @@
+# Build artifacts
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.so.*
+*.exe
+
+# Runtime outputs
+output/logs/*
+output/frames/*
+output/snapshots/*
+output/records/*
+output/events/*
+output/streams/*
+output/reports/*
+!output/**/.gitkeep
+
+# Large local assets / models
+*.mp4
+*.avi
+*.mkv
+*.flv
+*.h264
+*.h265
+*.rknn
+*.onnx
+*.pt
+*.engine
+!models/**/.gitkeep
+!assets/**/.gitkeep
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets
+configs/*secret*
+configs/*local*
+.env

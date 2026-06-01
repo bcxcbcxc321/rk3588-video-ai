@@ -1,0 +1,10 @@
+# 模型配置示例
+models:
+  - name: person
+    path: models/rknn/person.rknn
+    labels: models/labels/person.txt
+    input_width: 640
+    input_height: 640
+    npu_core: 0
+    threshold: 0.3
+    enabled: true

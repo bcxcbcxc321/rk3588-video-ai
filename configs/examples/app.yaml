@@ -1,0 +1,5 @@
+# 应用基础配置示例
+app:
+  name: rk3588_video_ai
+  log_level: info
+  graceful_shutdown: true

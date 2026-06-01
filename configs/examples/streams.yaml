@@ -1,0 +1,7 @@
+# 视频源配置示例
+streams:
+  - id: cam01
+    name: camera_01
+    type: file   # file | rtsp
+    url: assets/videos/demo.mp4
+    enabled: true

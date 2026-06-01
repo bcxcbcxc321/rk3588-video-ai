@@ -1,0 +1,10 @@
+# 输出配置示例
+streaming:
+  rtmp:
+    enabled: false
+    url: rtmp://127.0.0.1/live/rk_video_ai
+  video:
+    width: 1280
+    height: 720
+    fps: 25
+    bitrate: 2000000
