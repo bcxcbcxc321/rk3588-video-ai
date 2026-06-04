@@ -32,6 +32,25 @@ bool parseCliArgs(int argc, char** argv, CliArgs& args, std::string& error_messa
             continue;
         }
 
+        if (arg == "--streams-config") {
+            if (i + 1 >= argc) {
+                error_message = "missing value after --streams-config";
+                return false;
+            }
+            args.streams_config_path = argv[++i];
+            continue;
+        }
+
+        constexpr const char* streams_prefix = "--streams-config=";
+        if (arg.rfind(streams_prefix, 0) == 0) {
+            args.streams_config_path = arg.substr(std::string(streams_prefix).size());
+            if (args.streams_config_path.empty()) {
+                error_message = "--streams-config value cannot be empty";
+                return false;
+            }
+            continue;
+        }
+
         error_message = "unknown argument: " + arg;
         return false;
     }
@@ -44,6 +63,8 @@ std::string buildHelpText(const char* program_name) {
     oss << "Usage: " << (program_name ? program_name : "rk_video_ai") << " [options]\n\n"
         << "Options:\n"
         << "  --config <path>   Path to app yaml config. Default: configs/app.yaml\n"
+        << "  --streams-config <path>\n"
+        << "                    Path to streams yaml config. Default: configs/streams.yaml\n"
         << "  -h, --help        Show this help message\n\n"
         << "Environment:\n"
         << "  RK_VIDEO_AI_LOG_LEVEL=debug|info|warn|error\n"

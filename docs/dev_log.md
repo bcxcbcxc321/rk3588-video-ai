@@ -127,3 +127,69 @@ tail -n 10 output/logs/stage_1_2.log
 #### Git 提交建议
 
 - commit: `feat: add yaml app configuration loader`
+
+### 2026-06-02 - Stage 2.1 本地视频路径配置读取
+
+#### 今日完成
+
+- [x] 新增视频源配置结构：`StreamConfig`、`StreamsConfig`。
+- [x] 新增 `StreamConfigLoader::loadFromFile`，支持读取 `configs/streams.yaml`。
+- [x] 支持解析 `id`、`name`、`type`、`url`、`enabled`、`loop`、`reconnect`、`reconnect_interval_ms`、`read_timeout_ms`、`expected_fps`。
+- [x] 命令行新增 `--streams-config <path>`，默认读取 `configs/streams.yaml`。
+- [x] 程序启动后打印启用的本地文件视频路径。
+
+#### 验证命令
+
+```bash
+bash scripts/build/build.sh
+bash scripts/run/run_local.sh --config configs/app.yaml --streams-config configs/streams.yaml
+```
+
+#### 验证结果
+
+输出包含：
+
+```text
+[INFO] [main.cpp:48] loaded streams config: configs/streams.yaml
+[INFO] [main.cpp:59] stream.file01.url = assets/videos/demo.mp4
+[INFO] [main.cpp:62] local mp4 path = assets/videos/demo.mp4
+```
+
+#### Git 提交建议
+
+- commit: `feat: load local video path from stream config`
+
+### 2026-06-04 - Stage 2.1 OpenCV 本地视频读取 Demo
+
+#### 今日完成
+
+- [x] 按参考项目风格简化主流程：不新增复杂类，直接在 `main.cpp` 中实现 `readLocalVideoDemo()`。
+- [x] 从 `configs/streams.yaml` 找到第一路启用的 `file` 视频源。
+- [x] 使用 `cv::VideoCapture` 打开本地 mp4。
+- [x] 打印视频宽、高、FPS、总帧数。
+- [x] 读取视频帧，并每 30 帧打印一次读取进度。
+- [x] 保存第一帧到 `output/frames/stage_2_1_first_frame.jpg`。
+- [x] 拷贝测试视频到 `assets/videos/demo.mp4`，配置仍使用项目内相对路径。
+
+#### 验证命令
+
+```bash
+bash scripts/build/build.sh
+bash scripts/run/run_local.sh --config configs/app.yaml --streams-config configs/streams.yaml
+```
+
+#### 当前阶段说明
+
+当前先完成前期代码和准备工作，后期再到 RK3588 开发板上验证运行。
+
+当前 x86_64 环境缺少 OpenCV C++ 开发包，直接构建会停在 CMake 查找 OpenCV：
+
+```text
+Could not find a package configuration file provided by "OpenCV"
+```
+
+参考项目里的 OpenCV 是 ARM aarch64 版本，不能在当前 x86_64 环境直接链接。本阶段按代码准备完成处理，后续在 RK3588 板端把 OpenCV 放到 `third_party/opencv` 后再做实际运行验证。
+
+#### Git 提交建议
+
+- commit: `feat: add opencv local video reader demo`

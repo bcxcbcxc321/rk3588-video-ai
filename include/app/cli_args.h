@@ -6,6 +6,7 @@ namespace rk_video_ai {
 
 struct CliArgs {
     std::string config_path = "configs/app.yaml";
+    std::string streams_config_path = "configs/streams.yaml";
     bool show_help = false;
 };
 
