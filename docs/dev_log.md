@@ -193,3 +193,25 @@ Could not find a package configuration file provided by "OpenCV"
 #### Git 提交建议
 
 - commit: `feat: add opencv local video reader demo`
+
+### 2026-06-04 - Stage 2.2 视频帧缓冲模块
+
+#### 今日完成
+
+- [x] 新增 `Frame` 数据结构，包含图像、时间戳、通道 ID、帧序号。
+- [x] 新增 `FrameBuffer`，用于保存和读取最新一帧。
+- [x] `FrameBuffer::write()` 写入最新帧，内部复制图像，避免外部 `cv::Mat` 后续修改影响缓存。
+- [x] `FrameBuffer::read()` 读取最新帧，内部复制图像，避免读写线程共用同一块图像内存。
+- [x] 使用 `std::mutex` 保护读写，后续读线程和写线程可以安全访问。
+- [x] 缓冲区只保留最新一帧，不使用队列，避免内存无限增长。
+- [x] 在本地视频读取 Demo 中接入 `FrameBuffer`：每读到一帧先写入缓冲，再读取最新帧做保存和日志输出。
+
+#### 当前阶段说明
+
+当前先完成前期代码和准备工作。模块已经接入主流程，但完整多线程读写验证会在第 2.3 单路处理管线和 RK3588 环境中继续做。
+
+当前 x86_64 环境仍缺少 OpenCV C++ 开发包，`bash scripts/build/build.sh` 会在 CMake 查找 OpenCV 时停止。后续在 RK3588 板端或已安装 OpenCV 的环境中继续编译运行验证。
+
+#### Git 提交建议
+
+- commit: `feat: add thread-safe frame buffer`

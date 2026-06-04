@@ -2,7 +2,9 @@
 #include "config/app_config.h"
 #include "config/stream_config.h"
 #include "logging/logger.h"
+#include "video/buffer/frame_buffer.h"
 
+#include <chrono>
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
@@ -56,21 +58,39 @@ bool readLocalVideoDemo(const rk_video_ai::StreamConfig& stream) {
     std::filesystem::create_directories("output/frames");
 
     cv::Mat frame;
+    rk_video_ai::FrameBuffer frame_buffer;
     int frame_index = 0;
     bool saved_first_frame = false;
 
     while (cap.read(frame)) {
         ++frame_index;
 
+        rk_video_ai::Frame current_frame;
+        current_frame.image = frame;
+        current_frame.timestamp = std::chrono::steady_clock::now();
+        current_frame.channel_id = 0;
+        current_frame.frame_index = frame_index;
+
+        if (!frame_buffer.write(current_frame)) {
+            LOG_ERROR("failed to write frame to buffer");
+            return false;
+        }
+
+        rk_video_ai::Frame latest_frame;
+        if (!frame_buffer.read(latest_frame)) {
+            LOG_ERROR("failed to read latest frame from buffer");
+            return false;
+        }
+
         if (!saved_first_frame) {
             const std::string frame_path = "output/frames/stage_2_1_first_frame.jpg";
-            cv::imwrite(frame_path, frame);
+            cv::imwrite(frame_path, latest_frame.image);
             LOG_INFO("saved first frame: " + frame_path);
             saved_first_frame = true;
         }
 
         if (frame_index == 1 || frame_index % 30 == 0) {
-            LOG_INFO("read frame index = " + std::to_string(frame_index));
+            LOG_INFO("read frame index = " + std::to_string(latest_frame.frame_index));
         }
     }
 

@@ -20,6 +20,7 @@ add_executable(rk_video_ai
     src/config/app_config.cpp
     src/config/stream_config.cpp
     src/logging/logger.cpp
+    src/video/buffer/frame_buffer.cpp
 )
 
 target_include_directories(rk_video_ai PRIVATE include)
