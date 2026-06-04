@@ -215,3 +215,22 @@ Could not find a package configuration file provided by "OpenCV"
 #### Git 提交建议
 
 - commit: `feat: add thread-safe frame buffer`
+
+### 2026-06-04 - Stage 2.3 单路处理管线
+
+#### 今日完成
+
+- [x] 将本地视频读取 Demo 改成单路处理管线。
+- [x] 主线程负责读取配置、初始化日志、注册 Ctrl+C 信号、启动和回收线程。
+- [x] 新增读取线程：使用 `cv::VideoCapture` 读取本地视频帧，并写入 `FrameBuffer`。
+- [x] 新增处理线程：从 `FrameBuffer` 读取最新帧，保存首帧，并打印处理到的帧序号。
+- [x] 支持 `SIGINT` / `SIGTERM` 退出，按 Ctrl+C 后设置停止标志，两个线程正常退出并 join。
+- [x] 支持配置中的 `loop`：如果 `loop: true`，视频读到末尾后从头继续读；否则读完后退出。
+
+#### 当前阶段说明
+
+当前先完成前期代码和准备工作。由于当前 x86_64 环境仍缺少 OpenCV C++ 开发包，构建会停在 CMake 查找 OpenCV；后续在 RK3588 板端或已安装 OpenCV 的环境中继续编译运行验证。
+
+#### Git 提交建议
+
+- commit: `feat: add single-stream processing pipeline`
